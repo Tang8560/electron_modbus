@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <link href="./styles.css" rel="stylesheet">
+    <title>Modbus Controller</title>
+  </head>
+  <body>
+    <div>
+      <label for="name">Write (Hex)</label>
+      <input type="text" id="name" name="name" required minlength="4" maxlength="8" size="10" />
+    </div>
+    <div>
+      <label for="name">Read (Hex)</label>
+      <input type="text" id="name" name="name" required minlength="4" maxlength="8" size="10" />
+    </div>
+    <button>Start</button>
+    <script src="./renderer.js"></script>
+  </body>
+</html>
