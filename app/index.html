@@ -2,20 +2,90 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
-    <link href="./styles.css" rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *">
+    <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="./main_styles.css" rel="stylesheet">
     <title>Modbus Controller</title>
   </head>
-  <body>
-    <div>
-      <label for="name">Write (Hex)</label>
-      <input type="text" id="name" name="name" required minlength="4" maxlength="8" size="10" />
+  <body onload="onload()">
+    <div class="wrapper">
+      <div class="tabs">
+
+        <div class="tab">
+          <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
+          <label for="tab-1" class="tab-label">Modbus</label>
+          <div class="tab-content">
+            <div class="left-control">
+              <div class="grid-container">
+                <div class="grid-item"><label>Select Mode : </label></div>
+                <div class="grid-item">
+                  <select class="form-select" aria-label="Default select example">
+                    <option value="TCP">ModbusTCP (Ethernet)</option>
+                    <option value="RTU">ModbusRTU (Serial)</option>
+                  </select>
+                </div>
+                <div class="grid-item"><label>IP Address : </label></div>
+                <div class="grid-item"><input type="text" id="ip" name="ip" required minlength="7" maxlength="15" size="15" /></div>
+                <div class="grid-item"><label>Port : </label></div>
+                <div class="grid-item"><input type="text" id="port" name="port" inputmode="numeric" pattern="\d*"/></div>
+              </div>
+              <div class="button-container">
+                <button id="connect">Connect</button>
+                <button id="disconnect">Disconnect</button>
+              </div>
+            </div>
+            <div class="splitter">
+            </div>
+            <div class="right-control">
+              <div class="">
+                <h2>1. Read values from Server</h2>
+                <div class="grid-container">
+                  <div class="grid-item"><label>Starting Address : </label></div>
+                  <div class="grid-item"><input type="text" id="start" name="start" inputmode="numeric" pattern="\d*"/></div>
+                  <div class="grid-item"><label for="name">Number of values : </label></div>
+                  <div class="grid-item"><input type="text" id="num" name="num" inputmode="numeric" pattern="\d*"  /></div>
+                </div>
+                <div class="button-container">
+                  <button>Read Coils - FC1</button>
+                  <button>Read Discrete Inputs - FC2</button>
+                  <button>Read Holding Registers - FC3</button>
+                  <button>Read Input Registers -FC4</button>
+                </div>
+                <h2>2. Write values to Server</h2>
+                <div class="grid-container">
+                  <div class="grid-item"><label for="name">Starting Address : </label></div>
+                  <div class="grid-item"><input type="text" id="start" name="start" inputmode="numeric" pattern="\d*"  /></div>
+                </div>
+                <div class="button-container">
+                  <button>Write Single Coil - FC5</button>
+                  <button>Write Single Register - FC6</button>
+                  <button>Write Multiple Coils - FC15</button>
+                  <button>Write Multiple Registers -FC16</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab">
+          <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
+          <label for="tab-2" class="tab-label">Serial</label>
+          <div class="tab-content">My father now and then sending me small sums of money, I laid them out in learning navigation, and other parts of the mathematics, useful to those who intend to travel, as I always believed it would be, some time or other, my fortune to do. </div>
+        </div>
+
+        <div class="tab">
+          <input type="radio" name="css-tabs" id="tab-3" class="tab-switch">
+          <label for="tab-3" class="tab-label">I2C</label>
+          <div class="tab-content">When I left Mr. Bates, I went down to my father: where, by the assistance of him and my uncle John, and some other relations, I got forty pounds, and a promise of thirty pounds a year to maintain me at Leyden: there I studied physic two years and seven months, knowing it would be useful in long voyages.</div>
+        </div>
+
+        <div class="tab">
+          <input type="radio" name="css-tabs" id="tab-4" class="tab-switch">
+          <label for="tab-4" class="tab-label">SPI</label>
+          <div class="tab-content">When I left Mr. Bates, I went down to my father: where, by the assistance of him and my uncle John, and some other relations, I got forty pounds, and a promise of thirty pounds a year to maintain me at Leyden: there I studied physic two years and seven months, knowing it would be useful in long voyages.</div>
+        </div>
+      </div>
     </div>
-    <div>
-      <label for="name">Read (Hex)</label>
-      <input type="text" id="name" name="name" required minlength="4" maxlength="8" size="10" />
-    </div>
-    <button>Start</button>
     <script src="./renderer.js"></script>
   </body>
 </html>

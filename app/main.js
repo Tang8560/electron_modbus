@@ -31,8 +31,8 @@ function createWindow () {
   })
   mainWindow.loadFile(__dirname + '/index.html')
   mainWindow.webContents.openDevTools()
-  const appMenu = Menu.buildFromTemplate(menuTemplate);
-  Menu.setApplicationMenu(appMenu);
+  // const appMenu = Menu.buildFromTemplate(menuTemplate);
+  // Menu.setApplicationMenu(appMenu);
 }
 
 function createSlave () {
