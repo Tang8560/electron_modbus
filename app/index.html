@@ -7,25 +7,24 @@
     <link href="./main_styles.css" rel="stylesheet">
     <title>Modbus Controller</title>
   </head>
-  <body onload="onload()">
+  <body onload="onLoad()">
     <div class="wrapper">
       <div class="tabs">
-
         <div class="tab">
           <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
           <label for="tab-1" class="tab-label">Modbus</label>
           <div class="tab-content">
             <div class="left-control">
-              <div class="grid-container">
-                <div class="grid-item"><label>Select Mode : </label></div>
-                <div class="grid-item">
-                  <select class="form-select" aria-label="Default select example">
-                    <option value="TCP">ModbusTCP (Ethernet)</option>
-                    <option value="RTU">ModbusRTU (Serial)</option>
-                  </select>
-                </div>
+              <div class="grid-item"><label>Select Mode : </label></div>
+              <div class="grid-item">
+                <select id="dynamic-select" aria-label="Default select example" onchange="onChange()">
+                  <option value="TCP">ModbusTCP (Ethernet)</option>
+                  <option value="RTU">ModbusRTU (Serial)</option>
+                </select>
+              </div>
+              <div class="grid-container" id="init-panel">
                 <div class="grid-item"><label>IP Address : </label></div>
-                <div class="grid-item"><input type="text" id="ip" name="ip" required minlength="7" maxlength="15" size="15" /></div>
+                <div class="grid-item"><input type="text" id="ip" name="ip" inputmode="numeric" pattern="\d*" /></div>
                 <div class="grid-item"><label>Port : </label></div>
                 <div class="grid-item"><input type="text" id="port" name="port" inputmode="numeric" pattern="\d*"/></div>
               </div>
@@ -36,33 +35,40 @@
             </div>
             <div class="splitter">
             </div>
-            <div class="right-control">
-              <div class="">
-                <h2>1. Read values from Server</h2>
-                <div class="grid-container">
-                  <div class="grid-item"><label>Starting Address : </label></div>
-                  <div class="grid-item"><input type="text" id="start" name="start" inputmode="numeric" pattern="\d*"/></div>
-                  <div class="grid-item"><label for="name">Number of values : </label></div>
-                  <div class="grid-item"><input type="text" id="num" name="num" inputmode="numeric" pattern="\d*"  /></div>
-                </div>
-                <div class="button-container">
-                  <button>Read Coils - FC1</button>
-                  <button>Read Discrete Inputs - FC2</button>
-                  <button>Read Holding Registers - FC3</button>
-                  <button>Read Input Registers -FC4</button>
-                </div>
-                <h2>2. Write values to Server</h2>
-                <div class="grid-container">
-                  <div class="grid-item"><label for="name">Starting Address : </label></div>
-                  <div class="grid-item"><input type="text" id="start" name="start" inputmode="numeric" pattern="\d*"  /></div>
-                </div>
-                <div class="button-container">
-                  <button>Write Single Coil - FC5</button>
-                  <button>Write Single Register - FC6</button>
-                  <button>Write Multiple Coils - FC15</button>
-                  <button>Write Multiple Registers -FC16</button>
-                </div>
+            <div class="center-control">
+              <legend><span class="number">1</span> Read values from Server</legend>
+              <div class="grid-container">
+                <div class="grid-item"><label>Starting Address : </label></div>
+                <div class="grid-item"><input type="text" id="start" name="start" inputmode="numeric" pattern="\d*"/></div>
+                <div class="grid-item"><label for="name">Number of values : </label></div>
+                <div class="grid-item"><input type="text" id="num" name="num" inputmode="numeric" pattern="\d*"  /></div>
               </div>
+              <div class="button-container">
+                <button>Read Coils - FC1</button>
+                <button>Read Discrete Inputs - FC2</button>
+                <button>Read Holding Registers - FC3</button>
+                <button>Read Input Registers -FC4</button>
+              </div>
+              <legend><span class="number">2</span> Write values to Server</legend>
+              <div class="grid-container">
+                <div class="grid-item"><label for="name">Starting Address : </label></div>
+                <div class="grid-item"><input type="text" id="start" name="start" inputmode="numeric" pattern="\d*"  /></div>
+              </div>
+              <div class="button-container">
+                <button>Write Single Coil - FC5</button>
+                <button>Write Single Register - FC6</button>
+                <button>Write Multiple Coils - FC15</button>
+                <button>Write Multiple Registers -FC16</button>
+              </div>
+              <legend><span class="number">3</span> Command</legend>
+              <textarea name="" id="" cols="30" rows="10"></textarea>
+              <button>Send</button>
+            </div>
+            <div class="right-control">
+              <legend><span class="number">4</span> Receive Frame : </legend>
+              <textarea name="" class="result" cols="30" rows="10"></textarea>
+              <legend><span class="number">5</span> Parse Data :  </legend>
+              <textarea name="" class="result" cols="30" rows="10"></textarea>
             </div>
           </div>
         </div>

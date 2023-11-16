@@ -19,5 +19,8 @@
   "devDependencies": {
     "bootstrap-select": "^1.13.18",
     "electron": "^27.0.4"
+  },
+  "dependencies": {
+    "modbus-serial": "^8.0.13"
   }
 }

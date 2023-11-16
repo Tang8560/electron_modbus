@@ -5,11 +5,14 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font: bold 12px "Arial", sans-serif;
+  font: bold 15px "Arial", sans-serif;
   background: #2c3e50;
   color: #ecf0f1;
   line-height: 1.618em;
   overflow: hidden;
+  user-select:none; /* standard syntax */
+  -webkit-user-select:none; /* for Chrome、Safari */
+  -moz-user-select:none; /* for Mozilla、Firefox */
 }
 select{
   display:inline-block;
@@ -19,10 +22,30 @@ select{
   max-width: 100%;
 }
 input {
-  display:inline-block;
-  text-align:center;
+  text-align: center;
+}
+label {
+  font: bold 0.8em "Arial", sans-serif;
+}
+textarea, input {
+  background: rgba(255,255,255,0.1);
+  border: 0.15rem solid #37eac3;
+  height: 100%;
   width: 100%;
-  max-width: 100%;
+  min-height: 20px;
+  min-width: 100px;
+  resize: none;
+  margin: 0;
+  padding: 10px;
+  outline: 0;
+  background-color: #e8eeef;
+  color: #434547;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+  font: bold 15px "Arial", sans-serif;
+}
+legend {
+  font-size: 1.1em;
+  margin-bottom: 10px;
 }
 .wrapper {
   max-width: 100%;
@@ -80,6 +103,7 @@ input {
   border-bottom: 0.25rem solid #bdc3c7;
   opacity: 0;
   transition: all 0.35s;
+  background-image: url("asserts/back.jpg");
 }
 .tab-switch:checked + .tab-label {
   background: #fff;
@@ -95,68 +119,106 @@ input {
   opacity: 1;
   transition: all 0.35s;
 }
+.number {
+  background-color: rgb(221, 21, 171);
+  color: #fff;
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+  font-size: 1.1em;
+  margin-right: 4px;
+  line-height: 25px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+  border-radius: 100%;
+}
 .left-control{
   display: flex;
   flex-direction: column;
   padding: 5px;
   border-style: inset;
+  min-width: 250px;
+}
+.center-control {
+  display: flex;
+  flex-direction: column;
+  flex: 25%;
+  width: auto;
+  height: 100%;
+  padding: 5px;
+  min-width: 300px;
+  position: relative;
 }
 .right-control{
+  display: flex;
+  flex-direction: column;
+  flex: 30%;
   width: 100%;
   height: 100%;
+  resize: both;
+  padding: 12px;
   min-width: 50px;
 }
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto;
-  flex:3;
-  row-gap:10px;
-  grid-auto-rows: 5%;
+.center{
+  height: 35%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
-.grid-item {
-  padding: 5px;
-  text-align: left;
+.center-end{
+  height: 30%;
+  box-sizing: border-box;
+  background-color: black;
 }
 .splitter{
-  width: 2px;
-  background-color:rgba(130, 136, 130, 0.096);
+  width: 5px;
+  border: #d81b1b;
+  background-color:rgb(249, 252, 249);
   height:100%;
   cursor:w-resize;
   background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/vsizegrip.png) center center no-repeat #535353;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  flex:3;
+  row-gap:10px;
+  grid-auto-rows: 20px;
+  padding: 10px;
+}
 .button-container{
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr;
   flex: 1;
-  background: rgb(198, 229, 250);
+  flex-wrap: nowrap;
   padding: 10px;
-  margin: 0px;
+  margin:5px 5px;
   column-gap:10px;
   row-gap: 10px;
+  height: 100%;
+  background-color: #d7deda;
 }
 button{
-  background:radial-gradient(farthest-corner at 0px 0px, white 0%, black 50%);
+  background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgb(22, 66, 60) 12%);
   border-style: outset;
-  border-width: 1px;
+  border-width: 0px;
   border-radius: 5px;
-  font: bold 12px "Arial", sans-serif;
+  font: normal 13px "Arial", sans-serif;
   height: auto;
-  max-height: 50px;
+  min-width: 100px;
+  min-height: 40px;
+  max-height: 40px;
   color: #fff;
+  cursor:pointer;
 }
-button#connect:hover {
-  background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgba(7, 216, 7, 0.774) 50%);
+button:active {
+  background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgba(106, 245, 106, 0.932) 12%);
+  color: black;
+  border: medium solid green;
 }
-button#disconnect:hover {
-  background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgb(216, 7, 7) 50%);
+button#connect:active {
+  background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgba(1, 161, 1, 0.932) 12%);
 }
-
-#setting {
-  display: flex;
-  flex-wrap:wrap;
-  flex-direction: column;
-  margin: 0px, 1.2em;
-  justify-content:center;
-  align-content:space-between;
-  flex-grow:0 ;
+button#disconnect:active {
+  background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgb(245, 71, 71) 12%);
+  border: medium solid rgb(243, 63, 51);
 }
