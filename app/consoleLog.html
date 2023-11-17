@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./consoleLog.css" rel="stylesheet">
+    <title>Console</title>
+  </head>
+  <body>
+    <textarea id="logTextarea" rows="10" cols="50"></textarea>
+    <script>
+      // Override console.log to append messages to the textarea
+      (function() {
+        var textarea = document.getElementById('logTextarea');
+        var oldLog = console.log;
+
+        console.log = function(message) {
+          // Append the message to the textarea
+          textarea.value += message + '\n';
+
+          // Call the original console.log
+          oldLog.apply(console, arguments);
+        };
+      })();
+
+      // Example usage
+      console.log('Hello, this message will be shown in the textarea.');
+
+      // Additional console.log statements will be redirected to the textarea.
+    </script>
+    <!-- <script src="./consoleLog.js"></script> -->
+  </body>
+</html>

@@ -14,8 +14,7 @@ let menuTemplate = [
   {
     label: 'View',
     submenu: [
-      {label: 'Modbus Slave',  accelerator: 'CmdOrCtrl+S', click: async () => {createSlave()}},
-      {label: 'Modbus Master', accelerator: 'CmdOrCtrl+M', click: async () => {createMaster()}}
+      {label: 'Modbus Slave',  accelerator: 'CmdOrCtrl+S', click: async () => {consoleLog()}},
     ]
   }
 ]
@@ -26,16 +25,18 @@ function createWindow () {
     height: 600,
     icon: __dirname + '/asserts/app.ico',
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      nodeIntegration: true,
+      contextIsolation: false
+      // preload: path.join(__dirname, 'preload.js')
     }
   })
-  mainWindow.loadFile(__dirname + '/index.html')
+  mainWindow.loadFile(__dirname + '/main.html')
   mainWindow.webContents.openDevTools()
   // const appMenu = Menu.buildFromTemplate(menuTemplate);
   // Menu.setApplicationMenu(appMenu);
 }
 
-function createSlave () {
+function consoleLog() {
   mainBounds = mainWindow.getBounds()
   modbusSlave = new BrowserWindow({
     width: mainBounds.width*0.6,
@@ -49,32 +50,11 @@ function createSlave () {
     }
   })
   modbusSlave.setMenu(null)
-  modbusSlave.loadFile(__dirname + '/modbusSlave.html')
+  modbusSlave.loadFile(__dirname + '/consoleLog.html')
   modbusSlave.on('closed', () => {
     modbusSlave = null;
   });
 }
-
-function createMaster () {
-  mainBounds = mainWindow.getBounds()
-  modbusMaster = new BrowserWindow({
-    width: mainBounds.width*0.6,
-    height: mainBounds.height*0.6,
-    x: mainBounds.x + mainBounds.width*0.1,
-    y: mainBounds.y + mainBounds.height*0.1,
-    parent: mainWindow,
-    icon: __dirname + '/asserts/modbus.ico',
-    webPreferences: {
-      nodeIntegration: true
-    }
-  })
-  modbusMaster.setMenu(null)
-  modbusMaster.loadFile(__dirname + '/modbusMaster.html')
-  modbusMaster.on('closed', () => {
-    modbusMaster = null;
-  });
-}
-
 app.whenReady().then(() => {
   createWindow()
 

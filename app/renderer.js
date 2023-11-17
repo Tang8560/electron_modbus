@@ -1,110 +1,134 @@
-const ModbusRTU = require("modbus-serial");
+const { onChange, onLoad } = require('./preload')
+const ModbusRTU = require("modbus-serial")
 
-// <select id="dynamic-select"> change event
-// Create label and input
-function onChange() {
-  // Get the selected value from the select element
+// Modbus function
+//=========================================================================
+// Connect/Disconnect
+const connectBtn            = document.querySelector('#connect');
+const disconnectBtn         = document.querySelector('#disconnect');
+// Read mode
+const readCoilsBtn          = document.querySelector('#FC1');
+const readDiscreteInBtn     = document.querySelector('#FC2');
+const readHoldingRegBtn     = document.querySelector('#FC3');
+const readInputRegBtn       = document.querySelector('#FC4');
+// Write mode
+const writeSingleCoilBtn    = document.querySelector('#FC5');
+const writeSingleRegBtn     = document.querySelector('#FC6');
+const writeMultipleCoilsBtn = document.querySelector('#FC15');
+const writeMultipleRegBtn   = document.querySelector('#FC16');
+// Command mode
+const sendBtn               = document.querySelector('#send');
+
+//=========================================================================
+let client;
+let comportValue, slaveIDValue, baudrateValue, parityValue, stopbitsValue
+let receBuffer = document.getElementById('Receive Buffer');
+let resultData = document.getElementById('Result Data');
+
+// Connect button event
+connectBtn.addEventListener('click', () => {
+  console.log("Connect Successfully!!");
   var selectedValue = document.getElementById('dynamic-select').value;
+  client = new ModbusRTU();
+  if (selectedValue == "RTU") {
+    comportValue  = document.getElementById('comport').value;
+    slaveIDValue  = document.getElementById('slaveID').value;
+    baudrateValue = document.getElementById('baudrate').value;
+    parityValue   = document.getElementById('parity').value;
+    stopbitsValue = document.getElementById('stopbits').value;
 
-  if (selectedValue == "RTU"){
-    var comportLabel  = document.createElement('label');
-    var slaveIDLabel  = document.createElement('label');
-    var baudrateLabel = document.createElement('label');
-    var parityLabel   = document.createElement('label');
-    var stopbitsLabel = document.createElement('label');
-    var comportInput  = document.createElement('input');
-    var slaveIDInput  = document.createElement('input');
-    var baudrateInput = document.createElement('input');
-    var parityInput   = document.createElement('input');
-    var stopbitsInput = document.createElement('input');
-    comportLabel.textContent  = 'COM Port : ';
-    slaveIDLabel.textContent  = 'Slave ID : ';
-    baudrateLabel.textContent = 'Baudrate : ';
-    parityLabel.textContent   = 'Parity : ';
-    stopbitsLabel.textContent = 'Stopbits : ';
-    comportInput.setAttribute('id', 'comport');
-    slaveIDInput.setAttribute('id', 'slaveID');
-    baudrateInput.setAttribute('id', 'baudrate');
-    parityInput.setAttribute(  'id', 'parity');
-    stopbitsInput.setAttribute('id', 'stopbits');
-
-    document.getElementById('init-panel').innerHTML = '';
-    document.getElementById('init-panel').appendChild(comportLabel);
-    document.getElementById('init-panel').appendChild(comportInput);
-    document.getElementById('init-panel').appendChild(slaveIDLabel);
-    document.getElementById('init-panel').appendChild(slaveIDInput);
-    document.getElementById('init-panel').appendChild(baudrateLabel);
-    document.getElementById('init-panel').appendChild(baudrateInput);
-    document.getElementById('init-panel').appendChild(parityLabel);
-    document.getElementById('init-panel').appendChild(parityInput);
-    document.getElementById('init-panel').appendChild(stopbitsLabel);
-    document.getElementById('init-panel').appendChild(stopbitsInput);
+    client.connectRTU(comportValue, {
+      baudRate: parseInt(baudrateValue),
+      parity: parityValue,
+      stopBits: parseInt(stopbitsValue)
+    });
   }
-  else if(selectedValue == "TCP"){
-    var ipLabel   = document.createElement('label');
-    var portLabel = document.createElement('label');
-    var ipInput   = document.createElement('input');
-    var portInput = document.createElement('input');
-    ipLabel.textContent   = 'IP Address : ';
-    portLabel.textContent = 'Port : ';
-    document.getElementById('init-panel').innerHTML = '';
-    document.getElementById('init-panel').appendChild(ipLabel);
-    document.getElementById('init-panel').appendChild(ipInput);
-    document.getElementById('init-panel').appendChild(portLabel);
-    document.getElementById('init-panel').appendChild(portInput);
+  else if (selectedValue == "TCP") {
+    var ipValue  = document.getElementById('ip').value;
+    var portValue  = document.getElementById('port').value;
+
+    client.connectTCP(ipValue, { port: parseInt(portValue) });
   }
-  console.log(selectedValue);
-}
+});
 
-// <div class="splitter"> drag event
-function onLoad() {
-    dragElement( document.querySelector(".splitter"), "H" );
-}
-
-// <div class="splitter"> drag event
-function dragElement( element, direction, handler ) {
-  // Two variables for tracking positions of the cursor
-  const drag = { x : 0, y : 0 };
-  const delta = { x : 0, y : 0 };
-  /* If present, the handler is where you move the DIV from
-     otherwise, move the DIV from anywhere inside the DIV */
-  handler ? ( handler.onmousedown = dragMouseDown ): ( element.onmousedown = dragMouseDown );
-
-  // A function that will be called whenever the down event of the mouse is raised
-  function dragMouseDown( e )
-  {
-    drag.x = e.clientX;
-    drag.y = e.clientY;
-    document.onmousemove = onMouseMove;
-    document.onmouseup = () => { document.onmousemove = document.onmouseup = null; }
-  }
-
-  // A function that will be called whenever the up event of the mouse is raised
-  function onMouseMove( e )
-  {
-    const currentX = e.clientX;
-    const currentY = e.clientY;
-
-    delta.x = currentX - drag.x;
-    delta.y = currentY - drag.y;
-
-    const offsetLeft = element.offsetLeft;
-    const offsetTop = element.offsetTop;
-
-    const first = document.querySelector(".left-control");
-    const second = document.querySelector(".right-control");
-    let firstWidth = first.offsetWidth;
-    let secondWidth = second.offsetWidth;
-    // Horizontal
-    if (direction === "H" ) {
-        element.style.left = offsetLeft + delta.x + "px";
-        firstWidth += delta.x;
-        secondWidth -= delta.x;
+// Disconnect button event
+disconnectBtn.addEventListener('click', () => {
+  client.close((err) => {
+    if (err) {
+      console.error('Error closing :', err.message);
+    } else {
+      console.log('Disconnect Successfully!!');
     }
-    drag.x = currentX;
-    drag.y = currentY;
-    first.style.width = firstWidth + "px";
-    second.style.width = secondWidth + "px";
-  }
-}
+  });
+});
 
+//=========================================================================
+// Read button event
+//=========================================================================
+// FC1 "Read Coil Status"	      readCoils(coil, len)
+// FC2 "Read Input Status"	    readDiscreteInputs(addr, arg)
+// FC3 "Read Holding Registers"	readHoldingRegisters(addr, len)
+// FC4 "Read Input Registers"	  readInputRegisters(addr, len)
+//=========================================================================
+
+readCoilsBtn.addEventListener('click', () => {
+  console.log("[FC1] Read Coils")
+  client.setID(parseInt(slaveIDValue));
+  startAddRValue = document.getElementById('startAddR').value;
+  numberValValue = document.getElementById('numberVal').value;
+  client.readCoils(parseInt(startAddRValue), parseInt(numberValValue))
+    .then(console.log);
+    receBuffer.value += data.buffer + '\n';
+    resultData.value += data.data + '\n';
+});
+readDiscreteInBtn.addEventListener('click', () => {
+  console.log("[FC2] Read Discrete Inputs")
+  client.setID(parseInt(slaveIDValue));
+  startAddRValue = document.getElementById('startAddR').value;
+  numberValValue = document.getElementById('numberVal').value;
+  client.readDiscreteInputs(parseInt(startAddRValue), parseInt(numberValValue))
+    .then(console.log);
+    receBuffer.value += data.buffer + '\n';
+    resultData.value += data.data + '\n';
+});
+readHoldingRegBtn.addEventListener('click', () => {
+  console.log("[FC3] Read Holding Registers")
+  client.setID(parseInt(slaveIDValue));
+  startAddRValue = document.getElementById('startAddR').value;
+  numberValValue = document.getElementById('numberVal').value;
+  client.readHoldingRegisters(parseInt(startAddRValue), parseInt(numberValValue))
+    .then(console.log);
+    receBuffer.value += data.buffer + '\n';
+    resultData.value += data.data + '\n';
+});
+readInputRegBtn.addEventListener('click', () => {
+    console.log("[FC4] Read Input Registers")
+    client.setID(parseInt(slaveIDValue));
+    startAddRValue = document.getElementById('startAddR').value;
+    numberValValue = document.getElementById('numberVal').value;
+    data = client.readInputRegisters(parseInt(startAddRValue), parseInt(numberValValue));
+    console.log(data);
+    receBuffer.value += data.buffer + '\n';
+    resultData.value += data.data + '\n';
+});
+
+//=========================================================================
+// Write button event
+//=========================================================================
+// FC5 "Force Single Coil"	        writeCoil(coil, binary)   //NOT setCoil
+// FC6 "Preset Single Register"	    writeRegister(addr, value)
+// FC15 "Force Multiple Coil"	      writeCoils(addr, valueAry)
+// FC16 "Preset Multiple Registers"	writeRegisters(addr, valueAry)
+//=========================================================================
+writeSingleCoilBtn.addEventListener('click', () => {
+});
+writeSingleRegBtn.addEventListener('click', () => {
+});
+writeMultipleCoilsBtn.addEventListener('click', () => {
+});
+writeMultipleRegBtn.addEventListener('click', () => {
+});
+
+// Send button event
+sendBtn.addEventListener('click', () => {
+});

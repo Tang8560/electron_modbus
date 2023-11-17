@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src *; img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src 'self' 'unsafe-inline' *">
     <!-- <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <link href="./main_styles.css" rel="stylesheet">
+    <link href="./main.css" rel="stylesheet">
     <title>Modbus Controller</title>
   </head>
   <body onload="onLoad()">
@@ -37,38 +37,51 @@
             </div>
             <div class="center-control">
               <legend><span class="number">1</span> Read values from Server</legend>
-              <div class="grid-container">
-                <div class="grid-item"><label>Starting Address : </label></div>
-                <div class="grid-item"><input type="text" id="start" name="start" inputmode="numeric" pattern="\d*"/></div>
-                <div class="grid-item"><label for="name">Number of values : </label></div>
-                <div class="grid-item"><input type="text" id="num" name="num" inputmode="numeric" pattern="\d*"  /></div>
-              </div>
-              <div class="button-container">
-                <button>Read Coils - FC1</button>
-                <button>Read Discrete Inputs - FC2</button>
-                <button>Read Holding Registers - FC3</button>
-                <button>Read Input Registers -FC4</button>
+              <div class="combine-container">
+                <div class="grid-container">
+                  <div class="grid-item"><label>Starting Address : </label></div>
+                  <div class="grid-item"><input type="text" id="startAddR" name="startAddR" inputmode="numeric" pattern="\d*"/></div>
+                  <div class="grid-item"><label for="name">Number of values : </label></div>
+                  <div class="grid-item"><input type="text" id="numberVal" name="numberVal" inputmode="numeric" pattern="\d*"  /></div>
+                </div>
+                <div class="button-container">
+                  <button id="FC1">Read Coils - FC1</button>
+                  <button id="FC2">Read Discrete Inputs - FC2</button>
+                  <button id="FC3">Read Holding Registers - FC3</button>
+                  <button id="FC4">Read Input Registers -FC4</button>
+                </div>
               </div>
               <legend><span class="number">2</span> Write values to Server</legend>
-              <div class="grid-container">
-                <div class="grid-item"><label for="name">Starting Address : </label></div>
-                <div class="grid-item"><input type="text" id="start" name="start" inputmode="numeric" pattern="\d*"  /></div>
+              <div class="combine-container">
+                <div class="grid-container">
+                  <div class="grid-item"><label for="name">Starting Address : </label></div>
+                  <div class="grid-item"><input type="text" id="startAddW" name="startAddW" inputmode="numeric" pattern="\d*"  /></div>
+                  <div class="grid-item"><label for="name">Value : </label></div>
+                  <div class="grid-item"><input type="text" id="writeVal" name="writeVal" inputmode="numeric" pattern="\d*"  /></div>
+                </div>
+                <div class="button-container">
+                  <button id="FC5">Write Single Coil - FC5</button>
+                  <button id="FC6">Write Single Register - FC6</button>
+                  <button id="FC15">Write Multiple Coils - FC15</button>
+                  <button id="FC16">Write Multiple Registers -FC16</button>
+                </div>
               </div>
-              <div class="button-container">
-                <button>Write Single Coil - FC5</button>
-                <button>Write Single Register - FC6</button>
-                <button>Write Multiple Coils - FC15</button>
-                <button>Write Multiple Registers -FC16</button>
-              </div>
-              <legend><span class="number">3</span> Command</legend>
-              <textarea name="" id="" cols="30" rows="10"></textarea>
-              <button>Send</button>
             </div>
             <div class="right-control">
-              <legend><span class="number">4</span> Receive Frame : </legend>
-              <textarea name="" class="result" cols="30" rows="10"></textarea>
-              <legend><span class="number">5</span> Parse Data :  </legend>
-              <textarea name="" class="result" cols="30" rows="10"></textarea>
+              <legend><span class="number">3</span> Command</legend>
+              <div class="textarea-container">
+                <textarea name="" id="Send Command"></textarea>
+                <button id="send">Send</button>
+              </div>
+              <legend><span class="number">4</span> Receive Buffer : </legend>
+              <div class="textarea-container">
+                <textarea name="" class="result" id="Receive Buffer"></textarea>
+                <button id="bufferClear">Clear</button>
+              </div>
+              <legend><span class="number">5</span> Result Data :  </legend>
+              <div class="textarea-container">
+                <textarea name="" class="result" id="Result Data"></textarea>
+                <button id="dataClear">Clear</button>
             </div>
           </div>
         </div>
