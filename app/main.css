@@ -26,6 +26,7 @@ input {
 }
 label {
   font: bold 0.8em "Arial", sans-serif;
+  white-space: nowrap;
 }
 textarea, input {
   background: rgba(255,255,255,0.1);
@@ -44,8 +45,10 @@ textarea, input {
   font: bold 15px "Arial", sans-serif;
 }
 legend {
-  font-size: 1.1em;
-  margin-bottom: 10px;
+  font-size: 1em;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  white-space: nowrap;
 }
 .wrapper {
   max-width: 100%;
@@ -183,9 +186,9 @@ legend {
   grid-auto-rows: 20px;
   padding: 10px;
 }
-.button-container{
+.button-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   flex-wrap: wrap;
   padding: 10px;
   margin:5px 5px;
@@ -194,14 +197,17 @@ legend {
   /* height: 100%; */
   background-color: #d7deda;
 }
+.left-control .button-container {
+  grid-template-columns: 1fr 1fr;
+}
 button{
   background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgb(22, 66, 60) 12%);
   border-style: outset;
   border-width: 0px;
   border-radius: 5px;
-  font: normal 13px "Arial", sans-serif;
+  font: bold 13px "Arial", sans-serif;
   height: auto;
-  min-width: 100px;
+  min-width: 50px;
   min-height: 40px;
   max-height: 40px;
   color: #fff;
@@ -210,14 +216,36 @@ button{
 button:active {
   background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgba(106, 245, 106, 0.932) 12%);
   color: black;
-  border: medium solid green;
+  border: medium solid #FFF;
+}
+button#connect, button#disconnect {
+  min-width: 100px;
 }
 button#connect:active {
-  background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgba(1, 161, 1, 0.932) 12%);
+  background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgba(5, 238, 5, 0.932) 12%);
 }
 button#disconnect:active {
   background:radial-gradient(farthest-corner at 0px 0px, white 0%, rgb(245, 71, 71) 12%);
-  border: medium solid rgb(243, 63, 51);
+}
+.tooltip {
+  visibility: hidden;
+  width: 200px;
+  background-color: rgba(248, 245, 245, 0.952);
+  color: red; /* Set the font color for the tooltip */
+  text-align: center;
+  border-radius: 6px;
+  padding: 2px;
+  position: absolute;
+  z-index: 1;
+  bottom: 1px;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 50;
+  transition: opacity 0.3s ease;
+}
+.custom-button:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 .combine-container {
   flex: 1;
@@ -234,4 +262,7 @@ button#disconnect:active {
   position: absolute;
   bottom: 10px;
   right: 10px;
+  min-height: 30px;
+  max-height: 30px;
+  background: rgb(235, 156, 8);
 }

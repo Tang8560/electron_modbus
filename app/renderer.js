@@ -18,12 +18,28 @@ const writeMultipleCoilsBtn = document.querySelector('#FC15');
 const writeMultipleRegBtn   = document.querySelector('#FC16');
 // Command mode
 const sendBtn               = document.querySelector('#send');
-
 //=========================================================================
 let client;
-let comportValue, slaveIDValue, baudrateValue, parityValue, stopbitsValue
-let receBuffer = document.getElementById('Receive Buffer');
-let resultData = document.getElementById('Result Data');
+let comportValue, slaveIDValue, baudrateValue, parityValue, stopbitsValue;
+let commandBuffer = document.getElementById('Send Command');
+let receBuffer    = document.getElementById('Receive Buffer');
+let resultData    = document.getElementById('Result Data');
+
+function intToHex(number, width) {
+  let hexString = number.toString(16);
+  return hexString.padStart(width, '0');
+}
+
+function record(functionCode, data) {
+  slaveIDValue   = intToHex(slaveIDValue, 2);
+  startAddRValue = intToHex(startAddRValue, 2);
+  numberValValue = intToHex(numberValValue, 2);
+  packet = slaveIDValue + functionCode + startAddRValue + numberValValue + '\n';
+  commandBuffer.value += packet      + '\n';
+  receBuffer.value    += data.buffer + '\n';
+  resultData.value    += data.data   + '\n';
+}
+
 
 // Connect button event
 connectBtn.addEventListener('click', () => {
@@ -72,44 +88,40 @@ disconnectBtn.addEventListener('click', () => {
 //=========================================================================
 
 readCoilsBtn.addEventListener('click', () => {
-  console.log("[FC1] Read Coils")
+  console.log("[FC1] Read Coils");
   client.setID(parseInt(slaveIDValue));
   startAddRValue = document.getElementById('startAddR').value;
   numberValValue = document.getElementById('numberVal').value;
-  client.readCoils(parseInt(startAddRValue), parseInt(numberValValue))
-    .then(console.log);
-    receBuffer.value += data.buffer + '\n';
-    resultData.value += data.data + '\n';
+  data = client.readCoils(parseInt(startAddRValue), parseInt(numberValValue))
+  console.log(data);
+  record("01", data);
 });
 readDiscreteInBtn.addEventListener('click', () => {
-  console.log("[FC2] Read Discrete Inputs")
+  console.log("[FC2] Read Discrete Inputs");
   client.setID(parseInt(slaveIDValue));
   startAddRValue = document.getElementById('startAddR').value;
   numberValValue = document.getElementById('numberVal').value;
-  client.readDiscreteInputs(parseInt(startAddRValue), parseInt(numberValValue))
-    .then(console.log);
-    receBuffer.value += data.buffer + '\n';
-    resultData.value += data.data + '\n';
+  data = client.readDiscreteInputs(parseInt(startAddRValue), parseInt(numberValValue))
+  console.log(data);
+  record("02", data);
 });
 readHoldingRegBtn.addEventListener('click', () => {
-  console.log("[FC3] Read Holding Registers")
+  console.log("[FC3] Read Holding Registers");
   client.setID(parseInt(slaveIDValue));
   startAddRValue = document.getElementById('startAddR').value;
   numberValValue = document.getElementById('numberVal').value;
-  client.readHoldingRegisters(parseInt(startAddRValue), parseInt(numberValValue))
-    .then(console.log);
-    receBuffer.value += data.buffer + '\n';
-    resultData.value += data.data + '\n';
+  data = client.readHoldingRegisters(parseInt(startAddRValue), parseInt(numberValValue))
+  console.log(data);
+  record("03", data);
 });
 readInputRegBtn.addEventListener('click', () => {
-    console.log("[FC4] Read Input Registers")
+    console.log("[FC4] Read Input Registers");
     client.setID(parseInt(slaveIDValue));
     startAddRValue = document.getElementById('startAddR').value;
     numberValValue = document.getElementById('numberVal').value;
     data = client.readInputRegisters(parseInt(startAddRValue), parseInt(numberValValue));
     console.log(data);
-    receBuffer.value += data.buffer + '\n';
-    resultData.value += data.data + '\n';
+    record("04", data);
 });
 
 //=========================================================================
@@ -121,12 +133,32 @@ readInputRegBtn.addEventListener('click', () => {
 // FC16 "Preset Multiple Registers"	writeRegisters(addr, valueAry)
 //=========================================================================
 writeSingleCoilBtn.addEventListener('click', () => {
+  console.log("[FC5] Force Single Coil");
+  client.setID(parseInt(slaveIDValue));
+  startAddWValue = document.getElementById('startAddW').value;
+  writeValValue = document.getElementById('writeVal').value;
+  data = client.writeCoil(parseInt(startAddWValue), parseInt(writeValValue));
 });
 writeSingleRegBtn.addEventListener('click', () => {
+  console.log("[FC6] Preset Single Register");
+  client.setID(parseInt(slaveIDValue));
+  startAddWValue = document.getElementById('startAddW').value;
+  writeValValue = document.getElementById('writeVal').value;
+  data = client.writeRegister(parseInt(startAddWValue), parseInt(writeValValue));
 });
 writeMultipleCoilsBtn.addEventListener('click', () => {
+  console.log("[FC15] Force Multiple Coil");
+  client.setID(parseInt(slaveIDValue));
+  startAddWValue = document.getElementById('startAddW').value;
+  writeValValue = document.getElementById('writeVal').value;
+  data = client.writeCoils(parseInt(startAddWValue), parseInt(writeValValue));
 });
 writeMultipleRegBtn.addEventListener('click', () => {
+  console.log("[FC16] Preset Multiple Registers");
+  client.setID(parseInt(slaveIDValue));
+  startAddWValue = document.getElementById('startAddW').value;
+  writeValValue = document.getElementById('writeVal').value;
+  data = client.writeRegisters(parseInt(startAddWValue), parseInt(writeValValue));
 });
 
 // Send button event

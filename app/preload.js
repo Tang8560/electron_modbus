@@ -1,58 +1,67 @@
 // <select id="dynamic-select"> change event
 function onChange() {
-    // Get the selected value from the select element
-    var selectedValue = document.getElementById('dynamic-select').value;
+  // Get the selected value from the select element
+  var selectedValue = document.getElementById('dynamic-select').value;
 
-    if (selectedValue == "RTU"){
-      var comportLabel  = document.createElement('label');
-      var slaveIDLabel  = document.createElement('label');
-      var baudrateLabel = document.createElement('label');
-      var parityLabel   = document.createElement('label');
-      var stopbitsLabel = document.createElement('label');
-      var comportInput  = document.createElement('input');
-      var slaveIDInput  = document.createElement('input');
-      var baudrateInput = document.createElement('input');
-      var parityInput   = document.createElement('input');
-      var stopbitsInput = document.createElement('input');
-      comportLabel.textContent  = 'COM Port : ';
-      slaveIDLabel.textContent  = 'Slave ID : ';
-      baudrateLabel.textContent = 'Baudrate : ';
-      parityLabel.textContent   = 'Parity : ';
-      stopbitsLabel.textContent = 'Stopbits : ';
-      comportInput.setAttribute('id', 'comport');
-      slaveIDInput.setAttribute('id', 'slaveID');
-      baudrateInput.setAttribute('id', 'baudrate');
-      parityInput.setAttribute(  'id', 'parity');
-      stopbitsInput.setAttribute('id', 'stopbits');
+  if (selectedValue == "RTU"){
+    var comportLabel  = document.createElement('label');
+    var slaveIDLabel  = document.createElement('label');
+    var baudrateLabel = document.createElement('label');
+    var parityLabel   = document.createElement('label');
+    var stopbitsLabel = document.createElement('label');
+    var comportInput  = document.createElement('input');
+    var slaveIDInput  = document.createElement('input');
+    var baudrateInput = document.createElement('input');
+    var parityInput   = document.createElement('input');
+    var stopbitsInput = document.createElement('input');
+    comportLabel.textContent  = 'COM Port : ';
+    slaveIDLabel.textContent  = 'Slave ID : ';
+    baudrateLabel.textContent = 'Baudrate : ';
+    parityLabel.textContent   = 'Parity : ';
+    stopbitsLabel.textContent = 'Stopbits : ';
+    comportInput.setAttribute('id', 'comport');
+    slaveIDInput.setAttribute('id', 'slaveID');
+    baudrateInput.setAttribute('id', 'baudrate');
+    parityInput.setAttribute(  'id', 'parity');
+    stopbitsInput.setAttribute('id', 'stopbits');
 
-      document.getElementById('init-panel').innerHTML = '';
-      document.getElementById('init-panel').appendChild(comportLabel);
-      document.getElementById('init-panel').appendChild(comportInput);
-      document.getElementById('init-panel').appendChild(slaveIDLabel);
-      document.getElementById('init-panel').appendChild(slaveIDInput);
-      document.getElementById('init-panel').appendChild(baudrateLabel);
-      document.getElementById('init-panel').appendChild(baudrateInput);
-      document.getElementById('init-panel').appendChild(parityLabel);
-      document.getElementById('init-panel').appendChild(parityInput);
-      document.getElementById('init-panel').appendChild(stopbitsLabel);
-      document.getElementById('init-panel').appendChild(stopbitsInput);
-    }
-    else if(selectedValue == "TCP"){
-      var ipLabel   = document.createElement('label');
-      var portLabel = document.createElement('label');
-      var ipInput   = document.createElement('input');
-      var portInput = document.createElement('input');
-      ipLabel.textContent   = 'IP Address : ';
-      portLabel.textContent = 'Port : ';
-      ipInput.setAttribute('id', 'ip');
-      portInput.setAttribute('id', 'port');
-      document.getElementById('init-panel').innerHTML = '';
-      document.getElementById('init-panel').appendChild(ipLabel);
-      document.getElementById('init-panel').appendChild(ipInput);
-      document.getElementById('init-panel').appendChild(portLabel);
-      document.getElementById('init-panel').appendChild(portInput);
-    }
-    console.log("Select Mode :", selectedValue);
+    document.getElementById('init-panel').innerHTML = '';
+    document.getElementById('init-panel').appendChild(comportLabel);
+    document.getElementById('init-panel').appendChild(comportInput);
+    document.getElementById('init-panel').appendChild(slaveIDLabel);
+    document.getElementById('init-panel').appendChild(slaveIDInput);
+    document.getElementById('init-panel').appendChild(baudrateLabel);
+    document.getElementById('init-panel').appendChild(baudrateInput);
+    document.getElementById('init-panel').appendChild(parityLabel);
+    document.getElementById('init-panel').appendChild(parityInput);
+    document.getElementById('init-panel').appendChild(stopbitsLabel);
+    document.getElementById('init-panel').appendChild(stopbitsInput);
+  }
+  else if(selectedValue == "TCP"){
+    var ipLabel   = document.createElement('label');
+    var portLabel = document.createElement('label');
+    var ipInput   = document.createElement('input');
+    var portInput = document.createElement('input');
+    ipLabel.textContent   = 'IP Address : ';
+    portLabel.textContent = 'Port : ';
+    ipInput.setAttribute('id', 'ip');
+    portInput.setAttribute('id', 'port');
+    document.getElementById('init-panel').innerHTML = '';
+    document.getElementById('init-panel').appendChild(ipLabel);
+    document.getElementById('init-panel').appendChild(ipInput);
+    document.getElementById('init-panel').appendChild(portLabel);
+    document.getElementById('init-panel').appendChild(portInput);
+  }
+  console.log("Select Mode :", selectedValue);
+
+  // Set Default Value
+  document.getElementById('comport').value = "COM3";
+  document.getElementById('slaveID').value = "1";
+  document.getElementById('baudrate').value = "9600";
+  document.getElementById('parity').value = "none";
+  document.getElementById('stopbits').value = "1";
+  document.getElementById('ip').value = "127.0.0.1";
+  document.getElementById('port').value = "502";
 }
 
 // <div class="splitter"> drag event

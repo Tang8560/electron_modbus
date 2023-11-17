@@ -10,6 +10,8 @@
   <body onload="onLoad()">
     <div class="wrapper">
       <div class="tabs">
+
+        <!-- Modbus -->
         <div class="tab">
           <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
           <label for="tab-1" class="tab-label">Modbus</label>
@@ -40,15 +42,15 @@
               <div class="combine-container">
                 <div class="grid-container">
                   <div class="grid-item"><label>Starting Address : </label></div>
-                  <div class="grid-item"><input type="text" id="startAddR" name="startAddR" inputmode="numeric" pattern="\d*"/></div>
+                  <div class="grid-item"><input type="text" id="startAddR" name="startAddR" inputmode="numeric" pattern="\d*" placeholder="First coil/register address"/></div>
                   <div class="grid-item"><label for="name">Number of values : </label></div>
-                  <div class="grid-item"><input type="text" id="numberVal" name="numberVal" inputmode="numeric" pattern="\d*"  /></div>
+                  <div class="grid-item"><input type="text" id="numberVal" name="numberVal" inputmode="numeric" pattern="\d*" placeholder="Total number of coils/registers" /></div>
                 </div>
                 <div class="button-container">
-                  <button id="FC1">Read Coils - FC1</button>
-                  <button id="FC2">Read Discrete Inputs - FC2</button>
-                  <button id="FC3">Read Holding Registers - FC3</button>
-                  <button id="FC4">Read Input Registers -FC4</button>
+                  <button class="custom-button" id="FC1">FC1<span class="tooltip">[FC1] Read Coils</span></button>
+                  <button class="custom-button" id="FC2">FC2<span class="tooltip">[FC2] Read Discrete Inputs</span></button>
+                  <button class="custom-button" id="FC3">FC3<span class="tooltip">[FC3] Read Holding Registers</span></button>
+                  <button class="custom-button" id="FC4">FC4<span class="tooltip">[FC4] Read Input Registers</span></button>
                 </div>
               </div>
               <legend><span class="number">2</span> Write values to Server</legend>
@@ -60,10 +62,10 @@
                   <div class="grid-item"><input type="text" id="writeVal" name="writeVal" inputmode="numeric" pattern="\d*"  /></div>
                 </div>
                 <div class="button-container">
-                  <button id="FC5">Write Single Coil - FC5</button>
-                  <button id="FC6">Write Single Register - FC6</button>
-                  <button id="FC15">Write Multiple Coils - FC15</button>
-                  <button id="FC16">Write Multiple Registers -FC16</button>
+                  <button class="custom-button" id="FC5">FC5<span class="tooltip">[FC5] Write Single Coil</span></button>
+                  <button class="custom-button" id="FC6">FC6<span class="tooltip">[FC6] Write Single Register</span></button>
+                  <button class="custom-button" id="FC15">FC15<span class="tooltip">[FC15] Write Multiple Coils</span></button>
+                  <button class="custom-button" id="FC16">FC16<span class="tooltip">[FC16] Write Multiple Registers</span></button>
                 </div>
               </div>
             </div>
@@ -82,22 +84,26 @@
               <div class="textarea-container">
                 <textarea name="" class="result" id="Result Data"></textarea>
                 <button id="dataClear">Clear</button>
+			        </div>
             </div>
           </div>
         </div>
 
+        <!-- Serial -->
         <div class="tab">
           <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
           <label for="tab-2" class="tab-label">Serial</label>
           <div class="tab-content">My father now and then sending me small sums of money, I laid them out in learning navigation, and other parts of the mathematics, useful to those who intend to travel, as I always believed it would be, some time or other, my fortune to do. </div>
         </div>
 
+        <!-- I2C -->
         <div class="tab">
           <input type="radio" name="css-tabs" id="tab-3" class="tab-switch">
           <label for="tab-3" class="tab-label">I2C</label>
           <div class="tab-content">When I left Mr. Bates, I went down to my father: where, by the assistance of him and my uncle John, and some other relations, I got forty pounds, and a promise of thirty pounds a year to maintain me at Leyden: there I studied physic two years and seven months, knowing it would be useful in long voyages.</div>
         </div>
 
+        <!-- SPI -->
         <div class="tab">
           <input type="radio" name="css-tabs" id="tab-4" class="tab-switch">
           <label for="tab-4" class="tab-label">SPI</label>
