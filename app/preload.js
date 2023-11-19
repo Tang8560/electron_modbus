@@ -55,13 +55,17 @@ function onChange() {
   console.log("Select Mode :", selectedValue);
 
   // Set Default Value
-  document.getElementById('comport').value = "COM3";
-  document.getElementById('slaveID').value = "1";
-  document.getElementById('baudrate').value = "9600";
-  document.getElementById('parity').value = "none";
-  document.getElementById('stopbits').value = "1";
-  document.getElementById('ip').value = "127.0.0.1";
-  document.getElementById('port').value = "502";
+  if (selectedValue == "RTU"){
+    document.getElementById('comport').value = "COM3";
+    document.getElementById('slaveID').value = "1";
+    document.getElementById('baudrate').value = "9600";
+    document.getElementById('parity').value = "none";
+    document.getElementById('stopbits').value = "1";
+  }
+  else if(selectedValue == "TCP"){
+    document.getElementById('ip').value = "127.0.0.1";
+    document.getElementById('port').value = "502";
+  }
 }
 
 // <div class="splitter"> drag event
